@@ -18,3 +18,8 @@
 
 - https://noonnu.cc/font_page/1704
   (바뀐 티가 많이 나는 폰트로 적용해 보기)
+- app/font 폴더 생성
+- 다운로드 받은 파일을 font폴더에 넣어주기
+- app/layout.tsx에 `import localFont from "next/font/local";` 추가하기
+  (자동완성이 안되니까 from 경로는 외워 두자)
+- 나머지 코드 작성하고 `{griun.variable}` variable를 사용 함으로 globals.css에 전역으로 작성해주기
