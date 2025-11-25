@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import localFont from "next/font/local";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,7 +21,43 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={`${griun.variable} antialiased`}>{children}</body>
+      <body className={`${griun.variable} antialiased`}>
+        <header className="w-full h-20 bg-amber-100">
+          <div className="con h-full flex items-center justify-around">
+            <div className="font-bold text-[24px]">
+              <Link href={"/"}>SUPA BASE</Link>
+            </div>
+            <div>
+              <ul className="menu flex gap-4">
+                <li>
+                  <Link href={"/post/write"}>글 쓰기</Link>
+                </li>
+                <li>
+                  <Link href={"/post/list"}>글 목록</Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </header>
+        <main className="h-[90vh] flex items-center justify-center">
+          {children}
+        </main>
+        <footer className="w-full h-20 bg-amber-100">
+          <div className="h-full mx-auto flex items-center justify-around ">
+            <p>ⓒ2025 SUPA BASE All rights reserved.</p>
+            <div>
+              <ul className="menu flex gap-4">
+                <li>
+                  <Link href={"/post/write"}>글 쓰기</Link>
+                </li>
+                <li>
+                  <Link href={"/post/list"}>글 목록</Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </footer>
+      </body>
     </html>
   );
 }
