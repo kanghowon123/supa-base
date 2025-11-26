@@ -28,14 +28,14 @@
 
 **5. app/post - /post/write, /post/list 글 쓰기, 글 목록 페이지 만들기**
 
-- /post/write 글 쓰기 페이지 먼저 만들어보자
+/post/write 글 쓰기 페이지 먼저 만들어보자
 
 ```tsx
 const [title, setTitle] = useState<string>("");
 const [content, setContent] = useState<string>("");
 ```
 
-- 사용하여 제목(input)과 내용(textarea)을 저장하는 용도로 사용한다
+- 제목(input)과 내용(textarea)을 저장하는 용도로 사용한다
 
 ```tsx
 const [posts, setPosts] = useState<Post[]>([]);
@@ -70,3 +70,45 @@ setPosts((post) => [
 ```
 
 - 현재 작성된 게시글 배열을 JSON 문자열로 화면에 표시
+
+6. supabase 세팅하기
+
+- https://supabase.com/
+- 테이블에 데이터 추가하기
+- .env 파일 생성 후 supabase에서 제공한 url,key 값 저장하기
+- `URL=https://xxxx.xxx.xx` 띄어쓰기와 ""나 ;를 넣지 않기
+  .env 와 .env.local의 차이점
+- .env 와 .env.local이 있으면 .env.local이 우선권을 가지
+- .env는 기본/공통 환경 변수를 담는데 사용함
+- .env.local은 개인 환경 변수를 담는데 사용
+
+슈퍼베이스 사용하기
+/post/wirite
+
+```tsx
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!;
+const supabase = createClient(supabaseUrl, supabaseKey);
+```
+
+- !는 “이 값은 절대 undefined가 아니다!”라고 컴파일러에게 알려주는 역할
+
+버튼 비동기로 수정하고 기존 만들어준 id값이랑 담아주던 posts 배열 삭제
+
+```tsx
+const { error } = await supabase.from("post").insert({
+  title,
+  content,
+});
+```
+
+`supabase.from("post")`
+
+- Supabase는 테이블 단위로 작업함
+- 여기서 `"post"`는 DB 안에 있는 테이블 이름
+- 즉, `"post"` 테이블에 데이터를 조작하겠다는 의미
+
+`.insert({ title, content })`
+
+- `.insert()`는 새 레코드(row)를 추가하는 함수
+- 안에 넣는 객체가 바로 컬럼(column)과 값(value) 매핑
