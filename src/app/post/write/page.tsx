@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { createClient } from "@supabase/supabase-js";
+import { createBrowserClient } from "@supabase/ssr";
 import { useRouter } from "next/navigation";
 
 import { Input } from "@/components/ui/input";
@@ -10,10 +10,10 @@ import { Textarea } from "@/components/ui/textarea";
 
 // import { Post } from "@/app/types/post";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!;
-const supabase = createClient(supabaseUrl, supabaseKey);
-
+const supabase = createBrowserClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
+);
 export default function WritePage() {
   const router = useRouter();
   const [title, setTitle] = useState<string>("");
@@ -23,7 +23,7 @@ export default function WritePage() {
   const writeBtn = async () => {
     if (!title.trim() || !content.trim()) return;
 
-    const { error } = await supabase.from("post").insert({
+    const { error } = await supabase.from("posts").insert({
       title,
       content,
     });
@@ -48,7 +48,7 @@ export default function WritePage() {
     setContent("");
 
     alert("글이 작성되었습니다");
-    router.push("/");
+    router.push("/post/list");
   };
 
   return (
@@ -62,14 +62,14 @@ export default function WritePage() {
             placeholder="제목을 입력해 주세요"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-          ></Input>
+          />
         </div>
         <div>
           <Textarea
             placeholder="내용을 입력해 주세요"
             value={content}
             onChange={(e) => setContent(e.target.value)}
-          ></Textarea>
+          />
         </div>
         <div className="ml-auto">
           <Button onClick={writeBtn} className="py-3 px-6 text-lg">

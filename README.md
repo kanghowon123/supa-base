@@ -102,13 +102,33 @@ const { error } = await supabase.from("post").insert({
 });
 ```
 
-`supabase.from("post")`
+`supabase.from("posts")`
 
 - Supabase는 테이블 단위로 작업함
-- 여기서 `"post"`는 DB 안에 있는 테이블 이름
-- 즉, `"post"` 테이블에 데이터를 조작하겠다는 의미
+- 여기서 `"posts"`는 DB 안에 있는 테이블 이름
+- 즉, `"posts"` 테이블에 데이터를 조작하겠다는 의미
 
 `.insert({ title, content })`
 
 - `.insert()`는 새 레코드(row)를 추가하는 함수
 - 안에 넣는 객체가 바로 컬럼(column)과 값(value) 매핑
+
+**Next.js와 함께 Supabase 사용**
+Supabase 프로젝트를 만드는 방법, 샘플 데이터를 추가하는 방법, Next.js 앱에서 쿼리를 실행하는 방법을 알아보세요.
+https://supabase.com/docs/guides/getting-started/quickstarts/nextjs
+
+/post/list 글 목록 페이지 만들기
+
+supabase가 반환하는 키 이름은 항상 `data`와 `error`
+
+`  const { data, error } = await supabase.from("posts").select("*");`
+
+- `.select("*")`는 posts의 모든 컬럼을 가져온다
+
+글쓰기는 클라이언트 컴포넌트
+글목록은 서버 컴포넌트 - 유틸/수퍼베이스/서버에서 가져오면 끝
+
+위지윅
+토스트Ui
+uiwjs
+스위트얼러트 ()
