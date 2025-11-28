@@ -6,15 +6,15 @@ import { createClient } from "@/app/utils/supabase/server";
 export default async function ListIdPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ listId: string }>;
 }) {
   const supabase = await createClient();
-  const { id } = await params;
+  const { listId } = await params;
 
   const { data: post, error } = await supabase
     .from("posts")
     .select("*")
-    .eq("id", id)
+    .eq("id", listId)
     .single();
 
   if (error) {
